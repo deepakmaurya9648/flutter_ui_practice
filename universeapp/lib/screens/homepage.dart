@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:universeapp/constant.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:universeapp/data.dart';
+import 'package:universeapp/screens/detailpage.dart';
+import 'package:universeapp/screens/profilepage.dart';
+import 'package:universeapp/screens/searchpage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -68,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                   underline: SizedBox(),
                 ),
                 SizedBox(
-                  height: 100,
+                  height: 90,
                 ),
                 Container(
                   height: 340,
@@ -77,75 +80,87 @@ class _HomePageState extends State<HomePage> {
                     itemWidth: MediaQuery.of(context).size.width - 2 * 64,
                     layout: SwiperLayout.STACK,
                     itemBuilder: (context, index) {
-                      return Stack(
-                        children: [
-                          Card(
-                            elevation: 8,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(32.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 150,
-                                  ),
-                                  Text(
-                                    planets[index].name,
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 40,
-                                        color: Color(0xff47455f),
-                                        fontWeight: FontWeight.w600),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    'Solar System',
-                                    style: GoogleFonts.roboto(
-                                      fontSize: 23,
-                                      color: primaryTextColor,
-                                      fontWeight: FontWeight.w500,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                  pageBuilder: (context, a, b) => DetailPage(
+                                        planetInfo: planets[index],
+                                      )));
+                        },
+                        child: Stack(
+                          children: [
+                            Card(
+                              elevation: 8,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(32.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 150,
                                     ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  SizedBox(height: 20),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Know more',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 18,
-                                          color: secondaryTextColor,
-                                          fontWeight: FontWeight.w500,
+                                    Text(
+                                      planets[index].name,
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 40,
+                                          color: Color(0xff47455f),
+                                          fontWeight: FontWeight.w600),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Text(
+                                      'Solar System',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 23,
+                                        color: primaryTextColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    SizedBox(height: 20),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Know more',
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 18,
+                                            color: secondaryTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.left,
                                         ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: secondaryTextColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          color: secondaryTextColor,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Image.asset(planets[index].iconImage),
-                          Positioned(
-                            right: 15,
-                            bottom: 45,
-                            child: Text(
-                              planets[index].position.toString(),
-                              style: TextStyle(
-                                fontSize: 150,
-                                color: primaryTextColor.withOpacity(0.08),
-                                fontWeight: FontWeight.w900,
+                            Hero(
+                                tag: planets[index].position,
+                                child: Image.asset(planets[index].iconImage)),
+                            Positioned(
+                              right: 15,
+                              bottom: 45,
+                              child: Text(
+                                planets[index].position.toString(),
+                                style: TextStyle(
+                                  fontSize: 150,
+                                  color: primaryTextColor.withOpacity(0.08),
+                                  fontWeight: FontWeight.w900,
+                                ),
+                                textAlign: TextAlign.right,
                               ),
-                              textAlign: TextAlign.right,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -162,7 +177,7 @@ class _HomePageState extends State<HomePage> {
           ),
           color: navigationColor,
         ),
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -172,11 +187,17 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               icon: Image.asset('assets/search_icon.png'),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
+              },
             ),
             IconButton(
               icon: Image.asset('assets/profile_icon.png'),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()));
+              },
             ),
           ],
         ),

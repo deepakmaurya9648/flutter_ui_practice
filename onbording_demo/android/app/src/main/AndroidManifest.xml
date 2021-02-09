@@ -1,8 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.universeapp">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="com.example.onbording_demo">
    <application
-        android:label="universeapp"
+        android:label="onbording_demo"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
